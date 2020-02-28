@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { CiTouchableOpacity } from '~/components'
-import { ROUTE_NAME, TYPE_SEARCH } from '~/constants'
+import { ROUTE_NAME, TYPE_REQUEST } from '~/constants'
 
 import {
   Container,
@@ -23,7 +23,7 @@ export function InputSearch(props) {
   function handleSubmit() {
     if (value) {
       navigate(ROUTE_NAME.SEARCH_RESULT, {
-        typeRequest: TYPE_SEARCH.SEARCH,
+        typeRequest: TYPE_REQUEST.SEARCH,
         name: value,
       })
     }

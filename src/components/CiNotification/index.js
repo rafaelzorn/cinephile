@@ -6,12 +6,7 @@ import { COLORS } from '~/styles'
 import { Container, StyledText, Button, ButtonText } from './styles'
 
 export function CiNotification(props) {
-  const {
-    text = 'Something wrong has happened, please try again later.',
-    icon = 'report-problem',
-    textButton = 'Try Again',
-    onPress = false,
-  } = props
+  const { text, icon, textButton, onPress } = props
 
   function renderButton() {
     return (

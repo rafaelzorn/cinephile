@@ -2,7 +2,7 @@ export const GENERAL = {
   UNIFORMED: 'Uninformed',
 }
 
-export const TYPE_SEARCH = {
+export const TYPE_REQUEST = {
   SEARCH: 'search',
   DISCOVER: 'discover',
 }

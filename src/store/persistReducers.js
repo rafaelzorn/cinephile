@@ -6,7 +6,7 @@ export default reducers => {
     {
       key: 'cinephile',
       storage: AsyncStorage,
-      whitelist: [],
+      whitelist: ['configuration'],
     },
     reducers
   )

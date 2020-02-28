@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ROUTE_NAME, TYPE_SEARCH } from '~/constants'
+import { ROUTE_NAME, TYPE_REQUEST } from '~/constants'
 import { Genres } from '~/data'
 
 import { InputSearch } from './components'
@@ -11,7 +11,7 @@ export function Search({ navigation }) {
 
   function handleSearch(genre) {
     navigate(ROUTE_NAME.SEARCH_RESULT, {
-      typeRequest: TYPE_SEARCH.DISCOVER,
+      typeRequest: TYPE_REQUEST.DISCOVER,
       name: genre.name,
       id: genre.id,
     })

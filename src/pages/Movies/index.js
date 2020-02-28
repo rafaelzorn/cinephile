@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import { useSelector } from 'react-redux'
 
 import { CiSpinner, CiNotification } from '~/components'
-import { TYPE_SEARCH } from '~/constants'
+import { TYPE_REQUEST } from '~/constants'
 import api from '~/services/api'
 import { COLORS } from '~/styles'
 import { Dates } from '~/utils'
@@ -28,19 +29,31 @@ export function Movies({ navigation, route }) {
   const [isError, setIsError] = useState(false)
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
-  const [isFilterModalVisible, setIsFilterModalVisible] = useState(false)
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
+  const [filter, setFilter] = useState({
+    filterType: 'popularity.desc',
+    filterName: 'Most popular',
+  })
 
-  const { navigate } = navigation
+  const hasAdultContent = useSelector(
+    state => state.configuration.hasAdultContent
+  )
+
+  const { filterType } = filter
   const {
-    params: { id = null, name = null, typeRequest = TYPE_SEARCH.DISCOVER } = {},
+    params: {
+      id = null,
+      name = null,
+      typeRequest = TYPE_REQUEST.DISCOVER,
+    } = {},
   } = route
 
   function getQueryRequest() {
-    if (typeRequest === TYPE_SEARCH.DISCOVER) {
+    if (typeRequest === TYPE_REQUEST.DISCOVER) {
       return id ? { with_genres: `${id}` } : null
     }
 
-    if (typeRequest === TYPE_SEARCH.SEARCH) {
+    if (typeRequest === TYPE_REQUEST.SEARCH) {
       return { query: `${name.trim()}` }
     }
 
@@ -54,9 +67,10 @@ export function Movies({ navigation, route }) {
       const response = await api.get(`${typeRequest}/movie`, {
         params: {
           page,
+          sort_by: filterType,
           with_release_type: '1|2|3|4|5|6|7',
           'release_date.lte': Dates.currentDate(),
-          include_adult: true,
+          include_adult: hasAdultContent,
           ...getQueryRequest(),
         },
       })
@@ -79,8 +93,18 @@ export function Movies({ navigation, route }) {
     }
   }
 
-  function handleFilterModal() {
-    setIsFilterModalVisible(!isFilterModalVisible)
+  function handleFilterModalOpen() {
+    setIsFilterModalOpen(!isFilterModalOpen)
+  }
+
+  function handleFilter(type, filterName, visible) {
+    if (type !== filterType) {
+      setPage(1)
+      setMovies([])
+      setFilter({ filterType: type, filterName })
+    }
+
+    setIsFilterModalOpen(visible)
   }
 
   useEffect(() => {
@@ -90,22 +114,22 @@ export function Movies({ navigation, route }) {
       })
     }
 
-    if (typeRequest === TYPE_SEARCH.DISCOVER) {
+    if (typeRequest === TYPE_REQUEST.DISCOVER) {
       navigation.setOptions({
         headerRight: () => {
           return (
-            <NavigationButtonFilter onPress={handleFilterModal}>
+            <NavigationButtonFilter onPress={handleFilterModalOpen}>
               <Icon color={COLORS.DARK_BLUE} name='filter-list' size={25} />
             </NavigationButtonFilter>
           )
         },
       })
     }
-  }, [route.params])
+  }, [route])
 
   useEffect(() => {
     getMovies()
-  }, [page])
+  }, [page, filter])
 
   useEffect(() => {
     if (isRefresh) {
@@ -125,47 +149,53 @@ export function Movies({ navigation, route }) {
     setPage(nextPage)
   }
 
+  function renderFooter() {
+    if (totalPages !== page) {
+      return (
+        <ContainerLoadMore>
+          <LoadMoreButton onPress={handleLoadMoreMovies}>
+            {!isLoadingMore ? (
+              <LoadMoreButtonText>Load more</LoadMoreButtonText>
+            ) : (
+              <CiSpinner size='small' />
+            )}
+          </LoadMoreButton>
+        </ContainerLoadMore>
+      )
+    }
+
+    return null
+  }
+
   function renderMovies() {
     if (isLoading && !isLoadingMore && !isRefresh) {
       return <CiSpinner />
     }
 
     if (isError) {
-      return <CiNotification onPress={getMovies} />
-    }
-
-    if (!movies.length) {
       return (
         <CiNotification
-          icon='mood-bad'
-          text='No movies found'
+          icon='report-problem'
+          text='Something wrong has happened, please try again later.'
+          textButton='Try Again'
           onPress={getMovies}
         />
       )
     }
 
-    function renderFooter() {
-      if (totalPages !== page) {
-        return (
-          <ContainerLoadMore>
-            <LoadMoreButton onPress={handleLoadMoreMovies}>
-              {!isLoadingMore ? (
-                <LoadMoreButtonText>Load more</LoadMoreButtonText>
-              ) : (
-                <CiSpinner size='small' />
-              )}
-            </LoadMoreButton>
-          </ContainerLoadMore>
-        )
-      }
-
-      return null
+    if (!movies.length) {
+      return <CiNotification icon='mood-bad' text='No movies found' />
     }
+
+    const { navigate } = navigation
+    const { filterName } = filter
 
     return (
       <ContainerMoviesList>
         <ContainerFilterName>
-          <FilterNameText numberOfLines={1}>Most popular</FilterNameText>
+          <FilterNameText numberOfLines={1}>
+            {typeRequest === TYPE_REQUEST.DISCOVER ? filterName : name}
+          </FilterNameText>
         </ContainerFilterName>
         <FlatList
           data={movies}
@@ -176,8 +206,10 @@ export function Movies({ navigation, route }) {
           onRefresh={handleRefreshMovies}
         />
         <FilterModal
-          isVisible={isFilterModalVisible}
-          onClose={handleFilterModal}
+          filter={filter}
+          isVisible={isFilterModalOpen}
+          onClose={handleFilterModalOpen}
+          onFilter={handleFilter}
         />
       </ContainerMoviesList>
     )

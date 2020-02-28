@@ -1,3 +1,5 @@
 import { combineReducers } from 'redux'
 
-export default combineReducers({})
+import configuration from './configuration/reducer'
+
+export default combineReducers({ configuration })
