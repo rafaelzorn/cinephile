@@ -1,6 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 
+import { ROUTE_NAME } from '~/constants'
 import { Languages } from '~/data'
 import { Images, Dates, Genres } from '~/utils'
 
@@ -18,7 +19,9 @@ export function Movie(props) {
   const { movie, navigate } = props
 
   return (
-    <Container>
+    <Container
+      onPress={() => navigate(ROUTE_NAME.MOVIE_DETAIL, { id: movie.id })}
+    >
       <StyledImage source={Images.getImageApi(movie.poster_path)} />
       <ContainerInformation>
         <View>

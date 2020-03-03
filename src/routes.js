@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import { ROUTE_NAME, TAB_NAME } from '~/constants'
-import { Movies, Search, Configuration } from '~/pages'
+import { Movies, Search, Configuration, MovieDetail } from '~/pages'
 import { COLORS } from '~/styles'
 
 const HomeStack = createStackNavigator()
@@ -35,6 +35,7 @@ function tabBarVisible(route) {
       const route = routes[routes.length - 1]
 
       if (route.name === ROUTE_NAME.SEARCH_RESULT) return false
+      if (route.name === ROUTE_NAME.MOVIE_DETAIL) return false
     }
   }
 
@@ -48,6 +49,11 @@ function HomeStackPage() {
         component={Movies}
         name={ROUTE_NAME.MOVIES}
         options={optionsDefault('Home')}
+      />
+      <HomeStack.Screen
+        component={MovieDetail}
+        name={ROUTE_NAME.MOVIE_DETAIL}
+        options={optionsDefault()}
       />
     </HomeStack.Navigator>
   )
@@ -64,6 +70,11 @@ function SearchStackPage() {
       <SearchStack.Screen
         component={Movies}
         name={ROUTE_NAME.SEARCH_RESULT}
+        options={optionsDefault()}
+      />
+      <SearchStack.Screen
+        component={MovieDetail}
+        name={ROUTE_NAME.MOVIE_DETAIL}
         options={optionsDefault()}
       />
     </SearchStack.Navigator>
