@@ -35,10 +35,6 @@ export function Movies({ navigation, route }) {
     filterName: 'Most popular',
   })
 
-  const hasAdultContent = useSelector(
-    state => state.configuration.hasAdultContent
-  )
-
   const { filterType } = filter
   const {
     params: {
@@ -47,6 +43,10 @@ export function Movies({ navigation, route }) {
       typeRequest = TYPE_REQUEST.DISCOVER,
     } = {},
   } = route
+
+  const hasAdultContent = useSelector(
+    state => state.configuration.hasAdultContent
+  )
 
   function getQueryRequest() {
     if (typeRequest === TYPE_REQUEST.DISCOVER) {
@@ -183,8 +183,8 @@ export function Movies({ navigation, route }) {
       )
     }
 
-    if (!movies.length) {
-      return <CiNotification icon='mood-bad' text='No movies found' />
+    if (movies.length === 0) {
+      return <CiNotification icon='thumb-down' text='No results available.' />
     }
 
     const { navigate } = navigation

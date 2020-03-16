@@ -6,8 +6,7 @@ import { COLORS } from '~/styles'
 
 export const Container = styled.ScrollView`
   flex: 1;
-  padding: 20px;
-  padding-top: 25px;
+  padding: 25px 20px 20px 20px;
   background-color: ${COLORS.WHITE};
 `
 
@@ -27,8 +26,7 @@ export const Item = styled.View`
   background-color: ${COLORS.WHITE};
   flex-direction: row;
   justify-content: space-between;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding: 25px 0 25px 0;
   border-top-width: 0;
   border-left-width: 0;
   border-right-width: 0;

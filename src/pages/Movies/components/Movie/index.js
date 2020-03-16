@@ -20,7 +20,9 @@ export function Movie(props) {
 
   return (
     <Container
-      onPress={() => navigate(ROUTE_NAME.MOVIE_DETAIL, { id: movie.id })}
+      onPress={() =>
+        navigate(ROUTE_NAME.MOVIE_DETAIL, { id: movie.id, title: movie.title })
+      }
     >
       <StyledImage source={Images.getImageApi(movie.poster_path)} />
       <ContainerInformation>

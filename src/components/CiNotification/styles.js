@@ -10,7 +10,7 @@ export const Container = styled.View`
 
 export const StyledText = styled.Text`
   padding: 25px;
-  font-size: 16px;
+  font-size: 19px;
   color: ${COLORS.BLUE};
   text-align: center;
 `

@@ -68,8 +68,7 @@ export const ButtonSave = styled(CiTouchableOpacity)`
   justify-content: center;
   border-radius: 100px;
   background-color: ${COLORS.DARK_BLUE};
-  border-width: 1px;
-  border-color: ${COLORS.DARK_BLUE};
+  border: 1px solid ${COLORS.DARK_BLUE};
   flex: 0.67;
   padding: 10px 20px;
 `

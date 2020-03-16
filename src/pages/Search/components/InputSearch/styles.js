@@ -6,9 +6,7 @@ import { COLORS } from '~/styles'
 
 export const Container = styled.View`
   width: 100%;
-  padding: 0 20px;
-  padding-top: 25px;
-  padding-bottom: 5px;
+  padding: 25px 20px 5px 20px;
 `
 
 export const ContainerInput = styled.View`

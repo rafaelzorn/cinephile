@@ -44,6 +44,5 @@ export const LoadMoreButtonText = styled.Text`
 `
 
 export const NavigationButtonFilter = styled(CiTouchableOpacity)`
-  padding-right: 15px;
-  padding-left: 20px;
+  padding: 0 15px 0 20px;
 `
