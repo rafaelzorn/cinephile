@@ -8,6 +8,7 @@ export function movie(data) {
     title: data.title || '',
     backdropPath: data.backdrop_path || '',
     video: data.videos.results[0] || [],
+    overview: data.overview || GENERAL.UNIFORMED,
     images: Images.formatImageUrl(data.images.backdrops),
     voteAverage: data.vote_average || 0,
     cast: Array.sliceArrayLength(data.credits.cast, 15),
@@ -22,5 +23,11 @@ export function movie(data) {
       Revenue: Currency.convertToDolar(data.revenue),
       Adult: GENERAL.ADULT_RATE[data.adult] || GENERAL.UNIFORMED,
     },
+  }
+}
+
+export function involved(data) {
+  return {
+    name: data.name || `${GENERAL.UNIFORMED} name`,
   }
 }

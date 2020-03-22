@@ -1,3 +1,6 @@
 export { Poster } from './Poster'
 export { MainInfo } from './MainInfo'
 export { Section } from './Section'
+export { Involved } from './Involved'
+export { InvolvedList } from './InvolvedList'
+export { InvolvedModal } from './InvolvedModal'
