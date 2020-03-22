@@ -17,7 +17,7 @@ export const ContainerMovieInfo = styled.View`
   margin: 35px 20px 20px 20px;
 `
 
-export const ReadMoreStyle = styled.Text`
+export const StyledReadMore = styled.Text`
   color: ${COLORS.PINK};
   margin-top: 5px;
   text-align: right;

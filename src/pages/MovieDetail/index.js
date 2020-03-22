@@ -19,7 +19,7 @@ import {
   ContainerMovieInfo,
   NavigationButtonShare,
   IconShare,
-  ReadMoreStyle,
+  StyledReadMore,
   Overview,
   StyledInvolvedModal,
 } from './styles'
@@ -89,7 +89,7 @@ export function MovieDetail({ navigation, route }) {
   function renderReadMore(text, handlePress) {
     return (
       <CiTouchableOpacity onPress={handlePress}>
-        <ReadMoreStyle>{text}</ReadMoreStyle>
+        <StyledReadMore>{text}</StyledReadMore>
       </CiTouchableOpacity>
     )
   }

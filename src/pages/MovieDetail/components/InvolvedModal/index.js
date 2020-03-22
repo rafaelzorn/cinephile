@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native'
 
-import { CiModal, CiSpinner, CiNotification } from '~/components'
+import { CiModal, CiNotification } from '~/components'
 import api from '~/services/api'
 import { Transform } from '~/utils'
 
-import { Container } from './styles'
+import { Container, Spinner, StyledScrollView } from './styles'
 
 export function InvolvedModal(props) {
   const [isLoading, setIsLoading] = useState(false)
@@ -35,23 +35,29 @@ export function InvolvedModal(props) {
 
   function renderInvolved() {
     if (isLoading || Object.entries(involved).length === 0) {
-      return <CiSpinner />
+      return <Spinner />
     }
 
     if (isError) {
       return (
-        <CiNotification
-          icon='report-problem'
-          text='Something wrong has happened, please try again later.'
-          textButton='Try Again'
-          onPress={getInvolved}
-        />
+        <StyledScrollView>
+          <CiNotification
+            icon='report-problem'
+            text='Something wrong has happened, please try again later.'
+            textButton='Try Again'
+            onPress={getInvolved}
+          />
+        </StyledScrollView>
       )
     }
 
     const { name } = Transform.involved(involved)
 
-    return <Text>{name}</Text>
+    return (
+      <StyledScrollView>
+        <Text>{name}</Text>
+      </StyledScrollView>
+    )
   }
 
   return (
