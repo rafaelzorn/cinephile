@@ -28,6 +28,12 @@ export function movie(data) {
 
 export function involved(data) {
   return {
+    profilePath: data.profile_path || '',
     name: data.name || `${GENERAL.UNIFORMED} name`,
+    knownForDepartment:
+      data.known_for_department || `${GENERAL.UNIFORMED} department`,
+    birthday: data.birthday || '',
+    placeOfBirth: data.place_of_birth || `${GENERAL.UNIFORMED} place of birth`,
+    biography: data.biography || GENERAL.UNIFORMED,
   }
 }

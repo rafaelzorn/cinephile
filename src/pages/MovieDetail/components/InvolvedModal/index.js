@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import { Text } from 'react-native'
 
 import { CiModal, CiNotification } from '~/components'
 import api from '~/services/api'
-import { Transform } from '~/utils'
+import { Transform, Images, Dates } from '~/utils'
 
-import { Container, Spinner, StyledScrollView } from './styles'
+import {
+  Container,
+  Spinner,
+  StyledScrollView,
+  ContainerInformation,
+  StyledImage,
+  Informations,
+  InvolvedName,
+  StyledText,
+  TitleBiography,
+  TextBiography,
+  ContainerButton,
+  CloseButton,
+  StyledIcon,
+} from './styles'
 
 export function InvolvedModal(props) {
   const [isLoading, setIsLoading] = useState(false)
@@ -51,12 +64,38 @@ export function InvolvedModal(props) {
       )
     }
 
-    const { name } = Transform.involved(involved)
+    const {
+      profilePath,
+      name,
+      knownForDepartment,
+      birthday,
+      placeOfBirth,
+      biography,
+    } = Transform.involved(involved)
 
     return (
-      <StyledScrollView>
-        <Text>{name}</Text>
-      </StyledScrollView>
+      <>
+        <StyledScrollView>
+          <ContainerInformation>
+            <StyledImage source={Images.getImageApi(profilePath)} />
+            <Informations>
+              <InvolvedName>{name}</InvolvedName>
+              <StyledText numberOfLines={2}>{knownForDepartment}</StyledText>
+              <StyledText numberOfLines={2}>
+                {Dates.getAge(birthday)}
+              </StyledText>
+              <StyledText numberOfLines={2}>{placeOfBirth}</StyledText>
+            </Informations>
+          </ContainerInformation>
+          <TitleBiography>Biography</TitleBiography>
+          <TextBiography>{biography}</TextBiography>
+        </StyledScrollView>
+        <ContainerButton>
+          <CloseButton onPress={onClose}>
+            <StyledIcon name='keyboard-arrow-down' size={20} />
+          </CloseButton>
+        </ContainerButton>
+      </>
     )
   }
 
