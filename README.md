@@ -23,7 +23,7 @@ Cinephile is an application developed with React Native it will make it easy the
 - Clone this repository
 - Install all dependencies using the command `yarn`
 - Fill the `.env` file
-- Run `react-native run-android` while you are running a Android emulator.
+- Run `react-native run-android` while you are running a Android emulator
 
 ## Used technologies
 
@@ -32,4 +32,4 @@ Cinephile is an application developed with React Native it will make it easy the
 - Redux
 - Redux Persist
 - Styled Component
-- Other React Native libs.
+- Other React Native libs
