@@ -11,6 +11,8 @@ Cinephile is an application developed with React Native it will make it easy the
 
 ## Preview
 
+![Cinephile](./preview.gif)
+
 ![Cinephile](./preview.png)
 
 ## APIs
