@@ -11,7 +11,7 @@ Cinephile is an application developed with React Native it will make it easy the
 
 ## Preview
 
-![Cinephile](./preview.gif)
+<img src="./preview.gif" height="500">
 
 ![Cinephile](./preview.png)
 
